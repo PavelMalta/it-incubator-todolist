@@ -72,6 +72,15 @@ function App() {
         setTasks({...tasks})    /// ...tasks это деструктиризация массива, содержимое старого массива добавить в новый
     }
 
+    function changeTaskTitle(taskID: string, title: string, todoListID: string) {
+        const todoListTasks = tasks[todoListID]
+        const task = todoListTasks.find(t => t.id === taskID)
+        if (task) {
+            task.title = title
+            setTasks({...tasks})
+        }
+    }
+
     function changeStatus(taskID: string, isDone: boolean, todoListID: string) {
         const todoListTasks = tasks[todoListID]
         const task = todoListTasks.find(t => t.id === taskID)   //метод find перебирает массив обьектов и возвращает обьект с нужным id (t.id)
@@ -100,13 +109,21 @@ function App() {
         })
     }
 
+    function changeTodoListTitle(title: string, todoListID: string) {
+        const todoList = todoLists.find( tl => tl.id === todoListID)
+        if(todoList) {
+            todoList.title = title
+            setTodolist([...todoLists])
+        }
+    }
+
 
     // UI:
     return (
         <div className="App">
             <AddItemForm addItem={addTodoList}/>
             {
-                todoLists.map( tl => {
+                todoLists.map(tl => {
 
                     let tasksForTodoList = tasks[tl.id]
                     if (tl.filter === "active") {
@@ -127,6 +144,8 @@ function App() {
                             changeFilter={changeFilter}
                             changeStatus={changeStatus}
                             removeTodoList={removeTodoList}
+                            changeTaskTitle={changeTaskTitle}
+                            changeTodoListTitle={changeTodoListTitle}
                         />
                     )
                 })

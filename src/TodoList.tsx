@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterValuesType, TaskType} from "./App";
 import {AddItemForm} from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
 
 type PropsType = {
     id: string
@@ -12,6 +13,8 @@ type PropsType = {
     changeFilter: (filterValue: FilterValuesType, todoListID: string) => void
     changeStatus: (taskID: string, isDone: boolean, todoListID: string) => void
     removeTodoList: (todoListID: string) => void
+    changeTaskTitle: (taskID: string, title: string, todoListID: string) => void
+    changeTodoListTitle: (title: string, todoListID: string) => void
 }
 
 function TodoList(props: PropsType) {
@@ -30,11 +33,15 @@ function TodoList(props: PropsType) {
     }
     const removeTodoList = () => {props.removeTodoList(props.id)}
 
+    const changeTodoListTitle = (title: string) => {
+        props.changeTodoListTitle(title, props.id)
+    }
+
 
     return (
 
         <div>
-            <h3>{props.title}<button onClick={removeTodoList}>x</button> </h3>
+            <h3><EditableSpan title={props.title} changeTitle={changeTodoListTitle}/><button onClick={removeTodoList}>x</button> </h3>
             <AddItemForm addItem={addTask} />
             <ul>
                 {
@@ -45,6 +52,9 @@ function TodoList(props: PropsType) {
                         const changeStatus = (e: ChangeEvent<HTMLInputElement>) => {
                             props.changeStatus(task.id, e.currentTarget.checked, props.id)
                         }//e.currentTarget - это ссылка на input, checked - свойство инпута
+                        const changeTaskTitle = (title: string) => {
+                            props.changeTaskTitle(task.id, title, props.id)
+                        }
                         return (
                             <li key={task.id} className={task.isDone ? "is-done" : ""}>
                                 <input
@@ -52,7 +62,7 @@ function TodoList(props: PropsType) {
                                     type="checkbox"
                                     checked={task.isDone}
                                 />
-                                <span>{task.title}</span>
+                               <EditableSpan title={task.title} changeTitle={changeTaskTitle}/>
                                 <button onClick={removeTask}>x
                                 </button>
                             </li>
@@ -72,4 +82,4 @@ function TodoList(props: PropsType) {
     )
 };
 
-export default TodoList;
+export default TodoList

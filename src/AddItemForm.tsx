@@ -4,7 +4,7 @@ type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
-export function AddItemForm(props:AddItemFormPropsType) {
+export function AddItemForm(props: AddItemFormPropsType) {
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
 
@@ -33,8 +33,7 @@ export function AddItemForm(props:AddItemFormPropsType) {
                 className={error ? "error" : ""}
             />
             <button onClick={addItem}>+</button>
-            {error &&
-            <div className={"error-message"}>{error}</div>}
+            {error && <div className={"error-message"}>{error}</div>}
         </div>
     )
 }
