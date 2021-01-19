@@ -2,8 +2,8 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterValuesType, TaskType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {IconButton, Button} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
+import {IconButton, Button, Checkbox} from "@material-ui/core";
+import {CheckBox, Delete} from "@material-ui/icons";
 
 type PropsType = {
     id: string
@@ -64,10 +64,10 @@ function TodoList(props: PropsType) {
                         }
                         return (
                             <li key={task.id} className={task.isDone ? "is-done" : ""}>
-                                <input
-                                    onChange={changeStatus}
-                                    type="checkbox"
+                                <Checkbox
+                                    color={"primary"}
                                     checked={task.isDone}
+                                    onChange={changeStatus}
                                 />
                                 <EditableSpan title={task.title} changeTitle={changeTaskTitle}/>
                                 <IconButton onClick={removeTask}>
@@ -80,7 +80,7 @@ function TodoList(props: PropsType) {
             </ul>
             <div>
                 <Button
-                    style={ {marginRight: "4px"} }
+                    style={{marginRight: "4px"}}
                     variant={props.filter === "all" ? "contained" : "outlined"}
                     color={"primary"}
                     size={"small"}
@@ -89,7 +89,7 @@ function TodoList(props: PropsType) {
                     All
                 </Button>
                 <Button
-                    style={ {marginRight: "4px"} }
+                    style={{marginRight: "4px"}}
                     variant={props.filter === "active" ? "contained" : "outlined"}
                     color={"primary"}
                     size={"small"}
@@ -98,7 +98,7 @@ function TodoList(props: PropsType) {
                     Active
                 </Button>
                 <Button
-                    style={ {marginRight: "4px"} }
+                    style={{marginRight: "4px"}}
                     variant={props.filter === "completed" ? "contained" : "outlined"}
                     color={"primary"}
                     size={"small"}
