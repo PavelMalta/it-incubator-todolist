@@ -45,12 +45,12 @@ function TodoList(props: PropsType) {
     return (
 
         <div>
-            <h3>
+            <h3 style={{textAlign: "center"}}>
                 <EditableSpan title={props.title} changeTitle={changeTodoListTitle}/>
                 <IconButton onClick={removeTodoList}><Delete/></IconButton>
-            </h3>
+            </h3 >
             <AddItemForm addItem={addTask}/>
-            <ul>
+            <ul style={{listStyle: "none", paddingLeft: "0px"}}>
                 {
                     props.tasks.map(task => {
                         const removeTask = () => {
