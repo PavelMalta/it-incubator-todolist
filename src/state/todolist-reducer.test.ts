@@ -1,4 +1,4 @@
-import {todoListsReducer, ActionType} from './todolists-reducer';
+import {todoListsReducer, ActionType, RemoveTodoListAC} from './todolists-reducer';
 import {v1} from 'uuid';
 import {TodoListType, FilterValuesType} from '../App';
 
@@ -11,7 +11,7 @@ test('correct todolist should be removed', () => {
         {id: todolistId2, title: "What to buy", filter: "all"}
     ]
 
-    const action: ActionType = { type: 'REMOVE-TODOLIST', id: todolistId1}
+    const action: ActionType = RemoveTodoListAC(todolistId1)
 
     const endState = todoListsReducer(startState, action)
 

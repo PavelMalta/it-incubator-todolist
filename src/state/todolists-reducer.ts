@@ -56,3 +56,7 @@ export function todoListsReducer(state: Array<TodoListType>, action: ActionType)
             return state
     }
 }
+
+export const RemoveTodoListAC = (id: string): RemoveTodoListActionType => {
+    return {type: 'REMOVE-TODOLIST', id: id}
+}
