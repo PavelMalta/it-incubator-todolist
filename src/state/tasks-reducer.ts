@@ -1,5 +1,6 @@
 import {TasksStateType, TaskType} from "../App";
 import {v1} from "uuid";
+import {AddTodoListActionType, RemoveTodoListActionType} from "./todolists-reducer";
 
 type RemoveActionType = {
     type: 'REMOVE-TASK'
@@ -25,9 +26,14 @@ type ChangeTaskTitleAC = {
 }
 
 
-export type ActionType = RemoveActionType | AddTaskActionType | ChangeTaskStatusAC | ChangeTaskTitleAC
+export type ActionType = RemoveActionType
+    | AddTaskActionType
+    | ChangeTaskStatusAC
+    | ChangeTaskTitleAC
+    | AddTodoListActionType
+    | RemoveTodoListActionType
 
-export function tasksReducer(state: Array<TasksStateType>, action: ActionType): Array<TasksStateType> {
+export function tasksReducer(state: TasksStateType, action: ActionType): TasksStateType {
     switch (action.type) {
         case 'REMOVE-TASK': {
             let copyState = {...state}
@@ -46,21 +52,33 @@ export function tasksReducer(state: Array<TasksStateType>, action: ActionType): 
             }
         }
         case 'CHANGE-TASK-STATUS': {
-                let copyState = {...state}
-            const task = copyState[action.todolistId].find( t => t.id === action.taskId)
+            let copyState = {...state}
+            const task = copyState[action.todolistId].find(t => t.id === action.taskId)
             if (task) {
                 task.isDone = action.isDone
             }
             return copyState
         }
         case 'CHANGE-TASK-TITLE': {
-                let copyState = {...state}
-            const task = copyState[action.todolistId].find( t => t.id === action.taskId)
+            let copyState = {...state}
+            const task = copyState[action.todolistId].find(t => t.id === action.taskId)
             if (task) {
                 task.title = action.title
             }
             return copyState
         }
+        case "ADD-TODOLIST": {
+            return {
+                ...state,
+                [v1()]: []
+            }
+        }
+        case "REMOVE-TODOLIST": {
+            let copyState = {...state}
+            delete copyState[action.id]
+            return copyState
+        }
+
 
         default:
             return state
