@@ -79,7 +79,6 @@ export function tasksReducer(state: TasksStateType, action: ActionType): TasksSt
             return copyState
         }
 
-
         default:
             return state
     }
