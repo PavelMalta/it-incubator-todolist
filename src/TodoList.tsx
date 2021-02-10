@@ -4,6 +4,9 @@ import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {IconButton, Button, Checkbox} from "@material-ui/core";
 import {CheckBox, Delete} from "@material-ui/icons";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "./state/store";
+import { TodoListType } from "./AppWithRedux";
 
 type PropsType = {
     id: string
@@ -20,8 +23,14 @@ type PropsType = {
 }
 
 function TodoList(props: PropsType) {
+    const todolist = useSelector<AppRootStateType, TodoListType>(state =>
+        state.todolists.filter(todo => todo.id === props.id)[0])
+    const tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[props.id])
+
+    const dispatch = useDispatch()
 
     const addTask = (title: string) => {
+        //dispatch(addTaskAC(title, todolist.id))
         props.addTask(title, props.id)
     }
     const onAllClickHandler = () => {
@@ -41,12 +50,11 @@ function TodoList(props: PropsType) {
         props.changeTodoListTitle(title, props.id)
     }
 
-
     return (
 
         <div>
             <h3 style={{textAlign: "center"}}>
-                <EditableSpan title={props.title} changeTitle={changeTodoListTitle}/>
+                <EditableSpan title={todolist.title} changeTitle={changeTodoListTitle}/>
                 <IconButton onClick={removeTodoList}><Delete/></IconButton>
             </h3 >
             <AddItemForm addItem={addTask}/>
