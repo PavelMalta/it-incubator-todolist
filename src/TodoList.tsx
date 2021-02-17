@@ -1,10 +1,10 @@
-import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from "react";
+import React, {useCallback} from "react";
 import {FilterValuesType, TaskType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {IconButton, Button, Checkbox} from "@material-ui/core";
+import {IconButton, Button} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import { TodoListType } from "./AppWithRedux";
 import Task from "./Task";
@@ -55,7 +55,6 @@ const TodoList = React.memo((props: PropsType) => {
         tasksForTodoList = props.tasks.filter(t => t.isDone === true)
     }
     return (
-
 
         <div>
             <h3 style={{textAlign: "center"}}>

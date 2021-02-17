@@ -1,6 +1,6 @@
 import {TasksStateType, TaskType} from "../App";
 import {v1} from "uuid";
-import {AddTodoListActionType, RemoveTodoListActionType, todoListID1, todoListID2} from "./todolists-reducer";
+import {AddTodoListActionType, RemoveTodoListActionType} from "./todolists-reducer";
 
 type RemoveActionType = {
     type: 'REMOVE-TASK'
@@ -25,18 +25,7 @@ type ChangeTaskTitleAC = {
     todolistId: string
 }
 
-let initialState:TasksStateType = {
-    [todoListID1]: [
-        {id: v1(), title: "AAA", isDone: false},
-        {id: v1(), title: "BBB", isDone: true},
-        {id: v1(), title: "CCC", isDone: false}
-    ],
-    [todoListID2]: [
-        {id: v1(), title: "DDD", isDone: true},
-        {id: v1(), title: "EEE", isDone: false},
-        {id: v1(), title: "FFF", isDone: false}
-    ]
-}
+let initialState:TasksStateType = {}
 
 
 export type ActionType = RemoveActionType

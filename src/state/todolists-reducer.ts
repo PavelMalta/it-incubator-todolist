@@ -20,11 +20,8 @@ type ChangeTodoListFilterActionType  = {
     filter: FilterValuesType
     id: string
 }
-export let todoListID1 = v1()
-export let todoListID2 = v1()
-let initialState:Array<TodoListType> = [
-    {id: todoListID1, title: "What to learn", filter: "all"},
-    {id: todoListID2, title: "What to buy", filter: "all"}]
+
+let initialState:Array<TodoListType> = []
 
 export type ActionType = RemoveTodoListActionType | AddTodoListActionType | ChangeTodoListTitleActionType | ChangeTodoListFilterActionType
 
