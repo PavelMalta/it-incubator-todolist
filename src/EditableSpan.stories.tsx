@@ -1,9 +1,6 @@
 import React from 'react';
 import {Story, Meta} from '@storybook/react/types-6-0';
-import {AddItemForm, AddItemFormPropsType} from "./AddItemForm";
 import {action} from "@storybook/addon-actions";
-import Task, {TaskPropsType} from "./Task";
-import {TaskType} from "./App";
 import {EditableSpan, EditableSpanPropsType} from "./EditableSpan";
 
 export default {
@@ -25,6 +22,8 @@ const Template: Story<EditableSpanPropsType> = (args) => <EditableSpan {...args}
 
 export const EditableSpanExample = Template.bind({});
 EditableSpanExample.args = {
-    changeTitle: action('Value EditableSpan changed') };
+    changeTitle: action('Value EditableSpan changed'),
+    title: 'Hello'
+};
 
 
