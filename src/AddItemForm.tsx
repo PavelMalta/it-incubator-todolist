@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
-type AddItemFormPropsType = {
+export type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
@@ -21,7 +21,9 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
         setTitle("")
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null)  /* очищаем поле ввода от класса error*/
+       if (error !== null) {
+           setError(null)
+       }
         setTitle(e.currentTarget.value)
     } //код для изменения содержимого инпут и записи его в тайтл
     const onKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
