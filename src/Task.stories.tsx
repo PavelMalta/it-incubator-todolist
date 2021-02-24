@@ -34,6 +34,5 @@ TaskIsNotDoneExample.args = {
     ...baseArgs,
     task: {id: '2',isDone: false, title: 'React'},
     todolistId: 'todolistId2'
-        }
-;
+        };
 
