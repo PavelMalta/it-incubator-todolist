@@ -37,7 +37,7 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const todolistId = '5f1473cf-e64a-470c-b277-f2e69e1522c5'
+        const todolistId = '8d6b8b5f-54e2-481c-9f67-e638e3ffca56'
         todolistAPI.deleteTodolist(todolistId)
             .then((res) => {
                 setState(res.data)
@@ -49,11 +49,45 @@ export const DeleteTodolist = () => {
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const todolistId = '539fa6d0-1aed-4e25-9dd8-bc74f748e014'
+        const todolistId = '8d6b8b5f-54e2-481c-9f67-e638e3ffca56'
         const title = 'React'
         todolistAPI.updateTodolistTitle(todolistId, title)
             .then((res) => {setState(res.data)})
     }, [])
 
     return <div> {JSON.stringify(state)}</div>
+}
+
+export const GetTasks = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        const todolistId = '539fa6d0-1aed-4e25-9dd8-bc74f748e014'
+        todolistAPI.getTasks(todolistId)
+            .then((res) => {
+                setState(res.data)
+            })
+    }, [])
+
+    return <div> {JSON.stringify(state)}</div>
+}
+
+export const CreateTask = () => {
+    const [state, setState] = useState<any>(null)
+    const [taskTitle, setTaskTitle] = useState<string>("")
+    const [todolistId, setTodolistId] = useState<string>("")
+
+    const createTask = () => {
+        todolistAPI.createTask(todolistId, taskTitle)
+            .then((res) => {
+                setState(res.data)
+            })
+    }
+
+    return <div> {JSON.stringify(state)}
+        <input placeholder={"todolistId"} value={todolistId}
+                onChange={(e) => {setTodolistId(e.currentTarget.value)}}/>
+        <input placeholder={"Task Title"} value={taskTitle}
+               onChange={(e) => {setTaskTitle(e.currentTarget.value)}}/>
+         <button onClick={createTask}>create task</button>
+    </div>
 }
