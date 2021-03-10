@@ -9,8 +9,20 @@ const settings = {
 }
 
 export const todolistAPI = {
-    getTodolists(){
+    getTodolists() {
         const promise = axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', settings)
            return promise
+    },
+    createTodolist(title: string) {
+        const promise = axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists',
+            {title}, settings)
+        return promise
+    },
+    deleteTodolist(todolistId: string) {
+        return  axios.delete(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, settings)
+    },
+    updateTodolistTitle(todolistId: string, title: string) {
+        return axios.put(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, {title}, settings)
     }
+
 }
