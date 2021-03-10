@@ -108,8 +108,8 @@ export const UpdateTaskTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         const todolistId = '539fa6d0-1aed-4e25-9dd8-bc74f748e014'
-        const taskId = '26828085-2372-4bab-9042-5b679f8ec4b8'
-        const title = 'CSS'
+        const taskId = '5342ff5e-b3f2-4fa5-ad51-6e5138cbc3e9'
+        const title = 'React and Redux'
         todolistAPI.updateTask(todolistId, taskId, title)
             .then((res) => {setState(res.data)})
     }, [])
