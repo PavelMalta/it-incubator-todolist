@@ -6,7 +6,7 @@ import {TodolistsList} from '../features/TodolistsList/TodolistsList'
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
-import { Route } from 'react-router-dom'
+import {Switch, Route, Redirect} from 'react-router-dom'
 import {Login} from "../features/Login/Login";
 
 function App() {
@@ -27,10 +27,14 @@ function App() {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
-            { status === 'loading' && <LinearProgress color={"secondary"}/>}
+            {status === 'loading' && <LinearProgress color={"secondary"}/>}
             <Container fixed>
-                <Route exact path={'/'} render={ () =>  <TodolistsList/>}/>
-                <Route path={'/login'} render={ () =>  <Login/>}/>
+                <Switch>
+                    <Route exact path={'/'} render={() => <TodolistsList/>}/>
+                    <Route path={'/login'} render={() => <Login/>}/>
+                    <Route path={'/404'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
+                    <Redirect from={'*'} to={'/404'}/>
+                </Switch>
             </Container>
         </div>
     )
