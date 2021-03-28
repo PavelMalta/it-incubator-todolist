@@ -6,6 +6,8 @@ import {TodolistsList} from '../features/TodolistsList/TodolistsList'
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
+import { Route } from 'react-router-dom'
+import {Login} from "../features/Login/Login";
 
 function App() {
 
@@ -27,7 +29,8 @@ function App() {
             </AppBar>
             { status === 'loading' && <LinearProgress color={"secondary"}/>}
             <Container fixed>
-                <TodolistsList/>
+                <Route exact path={'/'} render={ () =>  <TodolistsList/>}/>
+                <Route path={'/login'} render={ () =>  <Login/>}/>
             </Container>
         </div>
     )
