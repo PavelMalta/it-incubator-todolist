@@ -36,12 +36,19 @@ export const setAppErrorAC = (error: null | string) => {
 }
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
-    authAPI.me().then( res => {
-        debugger
-        if (res.data.resultCode === 0 ) {
-            dispatch(setIsLoggedInAC(true))
-        } else {
-
+    dispatch(setAppStatusAC('loading'))
+    authAPI.me().then(res => {
+            debugger
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(true))
+            } else {
+                if (res.data.messages.length) {
+                    dispatch(setAppErrorAC(res.data.messages[0]))
+                } else {
+                    dispatch(setAppErrorAC('Some error occurred'))
+                }
+            }
         }
-    })
+    )
+        .finally(() => dispatch(setAppStatusAC('succeeded')))
 }
