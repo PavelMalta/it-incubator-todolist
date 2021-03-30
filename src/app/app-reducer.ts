@@ -7,6 +7,7 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 const initialState = {
     status: 'succeeded' as RequestStatusType,
     error: null as null | string,
+    isInitialized: false as boolean
 }
 
 type InitialStateType = typeof initialState
@@ -17,14 +18,17 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
             return {...state, status: action.status}
         case 'APP/SET-ERROR':
             return {...state, error: action.error}
+        case 'APP/SET-IS-INITIALIZED':
+            return {...state, isInitialized: action.isInitialized}
         default:
             return state
     }
 }
 
-type ActionsType = SetAppStatusActionType | SetAppErrorActionType
+type ActionsType = SetAppStatusActionType | SetAppErrorActionType | setIsInitializedActionType
 export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
 export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
+export type setIsInitializedActionType = ReturnType<typeof setIsInitializedAC>
 
 
 export const setAppStatusAC = (status: RequestStatusType) => {
@@ -33,6 +37,10 @@ export const setAppStatusAC = (status: RequestStatusType) => {
 
 export const setAppErrorAC = (error: null | string) => {
     return {type: 'APP/SET-ERROR', error} as const
+}
+
+export const setIsInitializedAC = (isInitialized: boolean) => {
+    return {type: 'APP/SET-IS-INITIALIZED', isInitialized} as const
 }
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
@@ -50,5 +58,8 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
             }
         }
     )
-        .finally(() => dispatch(setAppStatusAC('succeeded')))
+        .finally(() => {
+            dispatch(setAppStatusAC('succeeded'))
+            dispatch(setIsInitializedAC(true))
+        })
 }
