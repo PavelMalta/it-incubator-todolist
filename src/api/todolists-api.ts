@@ -56,7 +56,7 @@ export type AuthLoginType = {
     email: string
     password: string
     rememberMe: boolean
-    captcha: string
+    captcha?: string
 }
 
 export type TodolistType = {
