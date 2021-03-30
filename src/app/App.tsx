@@ -1,17 +1,23 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './App.css'
 import {AppBar, Button, Container, IconButton, LinearProgress, Toolbar, Typography} from '@material-ui/core'
 import {Menu} from '@material-ui/icons'
 import {TodolistsList} from '../features/TodolistsList/TodolistsList'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {Switch, Route, Redirect} from 'react-router-dom'
 import {Login} from "../features/Login/Login";
+import {initializeAppTC} from "./app-reducer";
 
 function App() {
 
     const status = useSelector<AppRootStateType>((state) => state.app.status)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(initializeAppTC())
+    })
 
     return (
         <div className="App">
