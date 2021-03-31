@@ -18,16 +18,20 @@ import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {Switch, Route, Redirect} from 'react-router-dom'
 import {Login} from "../features/Login/Login";
 import {initializeAppTC} from "./app-reducer";
+import {logoutTC} from "../features/Login/auth-reducer";
 
 function App() {
 
     const status = useSelector<AppRootStateType>((state) => state.app.status)
     const isInitialized = useSelector<AppRootStateType>((state) => state.app.isInitialized)
+    const isLoggedIn = useSelector<AppRootStateType>((state) => state.auth.isLoggedIn)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(initializeAppTC())
     },[])
+
+    const setLogout = () => dispatch(logoutTC())
 
     if (!isInitialized) {
         return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
@@ -46,7 +50,8 @@ function App() {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    <Button color="inherit">Login</Button>
+
+                    {isLoggedIn ? <Button color="inherit" onClick={setLogout}>LogOut</Button> : <Button color="inherit">Login</Button>}
                 </Toolbar>
             </AppBar>
             {status === 'loading' && <LinearProgress color={"secondary"}/>}
