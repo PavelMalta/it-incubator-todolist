@@ -85,6 +85,7 @@ export const addTaskTC = (title: string, todolistId: string) => async (dispatch:
         }
     } catch (err) {
         dispatch(setAppErrorAC(err.message))
+        dispatch(setAppStatusAC('failed'))
     } finally {
         dispatch(setAppStatusAC('succeeded'))
     }

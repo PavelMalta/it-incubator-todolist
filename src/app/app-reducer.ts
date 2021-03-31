@@ -43,24 +43,25 @@ export const setIsInitializedAC = (isInitialized: boolean) => {
     return {type: 'APP/SET-IS-INITIALIZED', isInitialized} as const
 }
 
-export const initializeAppTC = () => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
-    authAPI.me()
-        .then(res => {
-            debugger
-            if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(true))
+export const initializeAppTC = () => async (dispatch: Dispatch) => {
+    try {
+        dispatch(setAppStatusAC('loading'))
+        let res = await authAPI.me()
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(true))
+        } else {
+            if (res.data.messages.length) {
+                dispatch(setAppErrorAC(res.data.messages[0]))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setAppErrorAC('Some error occurred'))
-                }
+                dispatch(setAppErrorAC('Some error occurred'))
             }
         }
-    )
-        .finally(() => {
-            dispatch(setAppStatusAC('succeeded'))
-            dispatch(setIsInitializedAC(true))
-        })
+    } catch (err) {
+        dispatch(setAppErrorAC(err.message))
+        dispatch(setAppStatusAC('failed'))
+    } finally {
+        dispatch(setAppStatusAC('succeeded'))
+        dispatch(setIsInitializedAC(true))
+    }
 }
+

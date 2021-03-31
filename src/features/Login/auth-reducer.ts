@@ -20,41 +20,47 @@ export const setIsLoggedInAC = (value: boolean) =>
     ({type: 'login/SET-IS-LOGGED-IN', value} as const)
 
 // thunks
-export const loginTC = (data: AuthLoginType) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatusAC('loading'))
-    authAPI.login(data)
-        .then(res => {
-                debugger
-                if (res.data.resultCode === 0) {
-                    dispatch(setIsLoggedInAC(true))
-                } else {
-                    if (res.data.messages.length) {
-                        dispatch(setAppErrorAC(res.data.messages[0]))
-                    } else {
-                        dispatch(setAppErrorAC('Some error occurred'))
-                    }
-                }
+export const loginTC = (data: AuthLoginType) => async (dispatch: Dispatch<ActionsType>) => {
+    try {
+        dispatch(setAppStatusAC('loading'))
+        let res = await authAPI.login(data)
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(true))
+        } else {
+            if (res.data.messages.length) {
+                dispatch(setAppErrorAC(res.data.messages[0]))
+            } else {
+                dispatch(setAppErrorAC('Some error occurred'))
             }
-        )
-        .finally(() => dispatch(setAppStatusAC('succeeded')))
+        }
+    } catch (err) {
+        dispatch(setAppErrorAC(err.message))
+        dispatch(setAppStatusAC('failed'))
+    } finally {
+        dispatch(setAppStatusAC('succeeded'))
+    }
 }
 
-export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatusAC('loading'))
-    authAPI.logout()
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(false))
-            } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setAppErrorAC('Some error occurred'))
-                }
-            }
-        })
-        .finally( () => dispatch(setAppStatusAC('succeeded')))
+export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
+    try {
+        dispatch(setAppStatusAC('loading'))
+        let res = await authAPI.logout()
 
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(false))
+        } else {
+            if (res.data.messages.length) {
+                dispatch(setAppErrorAC(res.data.messages[0]))
+            } else {
+                dispatch(setAppErrorAC('Some error occurred'))
+            }
+        }
+    } catch (err) {
+        dispatch(setAppErrorAC(err.message))
+        dispatch(setAppStatusAC('failed'))
+    } finally {
+        dispatch(setAppStatusAC('succeeded'))
+    }
 }
 
 
